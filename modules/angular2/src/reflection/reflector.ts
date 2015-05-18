@@ -1,7 +1,7 @@
 import {Type, isPresent, stringify, BaseException} from 'angular2/src/facade/lang';
 import {List, ListWrapper, Map, MapWrapper, StringMapWrapper} from 'angular2/src/facade/collection';
-import {SetterFn, GetterFn, MethodFn} from './types';
-export {SetterFn, GetterFn, MethodFn} from './types';
+import {SetterFn, GetterFn, MethodFn, IReflectionCapabilities} from './types';
+export {SetterFn, GetterFn, MethodFn, IReflectionCapabilities} from './types';
 
 // HACK: workaround for Traceur behavior.
 // It expects all transpiled modules to contain this marker.
@@ -13,9 +13,9 @@ export class Reflector {
   _getters: Map<string, GetterFn>;
   _setters: Map<string, SetterFn>;
   _methods: Map<string, MethodFn>;
-  reflectionCapabilities: any;
+  reflectionCapabilities: IReflectionCapabilities;
 
-  constructor(reflectionCapabilities) {
+  constructor(reflectionCapabilities: IReflectionCapabilities) {
     this._typeInfo = MapWrapper.create();
     this._getters = MapWrapper.create();
     this._setters = MapWrapper.create();
@@ -41,7 +41,7 @@ export class Reflector {
     }
   }
 
-  parameters(typeOfFunc): List<any> {
+  parameters(typeOfFunc): List<List<any>> {
     if (MapWrapper.contains(this._typeInfo, typeOfFunc)) {
       return MapWrapper.get(this._typeInfo, typeOfFunc)["parameters"];
     } else {
