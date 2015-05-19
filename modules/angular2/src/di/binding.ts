@@ -439,12 +439,12 @@ function _dependenciesFor(typeOrFunc): List<any> {
   var params = reflector.parameters(typeOrFunc);
   if (isBlank(params)) return [];
   if (ListWrapper.any(params, (p) => isBlank(p))) {
-    throw new NoAnnotationError(typeOrFunc);
+    throw new NoAnnotationError(typeOrFunc, params);
   }
-  return ListWrapper.map(params, (p) => _extractToken(typeOrFunc, p));
+  return ListWrapper.map(params, (p: List<any>) => _extractToken(typeOrFunc, p, params));
 }
 
-function _extractToken(typeOrFunc, annotations) {
+function _extractToken(typeOrFunc, annotations: List<any>, params: List<List<any>>) {
   var depProps = [];
   var token = null;
   var optional = false;
@@ -484,7 +484,7 @@ function _extractToken(typeOrFunc, annotations) {
   if (isPresent(token)) {
     return _createDependency(token, asPromise, lazy, optional, depProps);
   } else {
-    throw new NoAnnotationError(typeOrFunc);
+    throw new NoAnnotationError(typeOrFunc, params);
   }
 }
 

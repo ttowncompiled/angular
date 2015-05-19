@@ -47,6 +47,7 @@ export class Parent extends DependencyAnnotation {
   constructor() {
     super();
   }
+  toString() { return `@Parent()`; }
 }
 
 /**
@@ -108,4 +109,5 @@ export class Ancestor extends DependencyAnnotation {
   constructor() {
     super();
   }
+  toString() { return `@Ancestor()`; }
 }

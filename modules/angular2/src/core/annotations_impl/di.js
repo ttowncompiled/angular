@@ -1,4 +1,4 @@
-import {CONST} from 'angular2/src/facade/lang';
+import {CONST, stringify} from 'angular2/src/facade/lang';
 import {DependencyAnnotation} from 'angular2/src/di/annotations_impl';
 
 /**
@@ -44,6 +44,7 @@ export class Attribute extends DependencyAnnotation {
     //with @Attribute annotation are injected by ElementInjector that doesn't take tokens into account.
     return this;
   }
+  toString() { return `@Attribute(${stringify(this.attributeName)})`; }
 }
 
 /**
@@ -60,4 +61,5 @@ export class Query extends DependencyAnnotation {
     super();
     this.directive = directive;
   }
+  toString() { return `@Query(${stringify(this.directive)})`; }
 }

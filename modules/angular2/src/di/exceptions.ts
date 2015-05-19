@@ -179,9 +179,17 @@ export class InvalidBindingError extends BaseException {
 export class NoAnnotationError extends BaseException {
   name: string;
   message: string;
-  constructor(typeOrFunc) {
+  constructor(typeOrFunc, params: List<List<any>>) {
     super();
-    this.message = "Cannot resolve all parameters for " + stringify(typeOrFunc) + ". " +
+    var signature = ListWrapper.map(params, (paramater) => {
+      if (paramater.length == 0) {
+        return '?'
+      } else {
+        return ListWrapper.map(paramater, (p) => { return stringify(p); }).join(' ');
+      }
+    });
+    this.message = "Cannot resolve all parameters for " + stringify(typeOrFunc) + "(" +
+                   signature.join(', ') + "). " +
                    'Make sure they all have valid type or annotations.';
   }
 

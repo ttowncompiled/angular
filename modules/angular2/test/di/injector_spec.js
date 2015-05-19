@@ -2,6 +2,7 @@ import {isBlank, BaseException} from 'angular2/src/facade/lang';
 import {describe, ddescribe, it, iit, expect, beforeEach} from 'angular2/test_lib';
 import {Injector, bind, ResolvedBinding, Key, forwardRef} from 'angular2/di';
 import {Optional, Inject, InjectLazy} from 'angular2/src/di/annotations_impl';
+import {Query} from 'angular2/src/core/annotations_impl/di';
 
 
 class Engine {
@@ -71,8 +72,8 @@ class CyclicEngine {
   constructor(car:Car) {}
 }
 
-class NoAnnotations {
-  constructor(secretDependency) {}
+class MissingAnnotations {
+  constructor(@Query(forwardRef(() => Car)) @Inject(TurboEngine) engine, secretDependency, car:Car) {}
 }
 
 export function main() {
@@ -102,8 +103,8 @@ export function main() {
     });
 
     it('should throw when no type and not @Inject', function () {
-      expect(() => Injector.resolveAndCreate([NoAnnotations])).toThrowError(
-        'Cannot resolve all parameters for NoAnnotations. '+
+      expect(() => Injector.resolveAndCreate([MissingAnnotations])).toThrowError(
+        'Cannot resolve all parameters for MissingAnnotations(@Query(Car) @Inject(TurboEngine), ?, Car). '+
         'Make sure they all have valid type or annotations.');
     });
 
