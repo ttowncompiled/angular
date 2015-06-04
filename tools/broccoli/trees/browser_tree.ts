@@ -10,7 +10,6 @@ var stew = require('broccoli-stew');
 
 import compileWithTypescript from '../broccoli-typescript';
 import destCopy from '../broccoli-dest-copy';
-import {default as transpileWithTraceur, TRACEUR_RUNTIME_PATH} from '../traceur/index';
 
 
 var projectRootDir = path.normalize(path.join(__dirname, '..', '..', '..', '..'));
@@ -18,25 +17,7 @@ var projectRootDir = path.normalize(path.join(__dirname, '..', '..', '..', '..')
 
 module.exports = function makeBrowserTree(options, destinationPath) {
   var modulesTree = new Funnel(
-      'modules',
-      {include: ['**/**'], exclude: ['**/*.cjs', 'benchmarks/e2e_test/**'], destDir: '/'});
-
-  // Use Traceur to transpile *.js sources to ES6
-  var traceurTree = transpileWithTraceur(modulesTree, {
-    destExtension: '.es6',
-    destSourceMapExtension: '.map',
-    traceurOptions: {
-      sourceMaps: true,
-      annotations: true,      // parse annotations
-      types: true,            // parse types
-      script: false,          // parse as a module
-      memberVariables: true,  // parse class fields
-      modules: 'instantiate',
-      // typeAssertionModule: 'rtts_assert/rtts_assert',
-      // typeAssertions: options.typeAssertions,
-      outputLanguage: 'es6'
-    }
-  });
+      'modules', {include: ['**/**'], exclude: ['benchmarks/e2e_test/**'], destDir: '/'});
 
   // Use TypeScript to transpile the *.ts files to ES6
   // We don't care about errors: we let the TypeScript compilation to ES5
@@ -50,23 +31,7 @@ module.exports = function makeBrowserTree(options, destinationPath) {
     rootDir: '.',
     sourceMap: true,
     sourceRoot: '.',
-    target: 'ES6'
-  });
-  typescriptTree = stew.rename(typescriptTree, '.js', '.es6');
-
-  var es6Tree = mergeTrees([traceurTree, typescriptTree]);
-
-  // Call Traceur again to lower the ES6 build tree to ES5
-  var es5Tree = transpileWithTraceur(es6Tree, {
-    destExtension: '.js',
-    destSourceMapExtension: '.js.map',
-    traceurOptions: {modules: 'instantiate', sourceMaps: true}
-  });
-
-  // Now we add a few more files to the es6 tree that Traceur should not see
-  ['angular2', 'rtts_assert'].forEach(function(destDir) {
-    var extras = new Funnel('tools/build', {files: ['es5build.js'], destDir: destDir});
-    es6Tree = mergeTrees([es6Tree, extras]);
+    target: 'ES5'
   });
 
 
@@ -81,7 +46,6 @@ module.exports = function makeBrowserTree(options, destinationPath) {
       'node_modules/rx/dist/rx.js',
       'node_modules/reflect-metadata/Reflect.js',
       'tools/build/snippets/runtime_paths.js',
-      path.relative(projectRootDir, TRACEUR_RUNTIME_PATH)
     ]
   }));
   var vendorScripts_benchmark =
@@ -143,9 +107,7 @@ module.exports = function makeBrowserTree(options, destinationPath) {
 
   htmlTree = mergeTrees([htmlTree, scripts, polymer, css, react]);
 
-  es5Tree = mergeTrees([es5Tree, htmlTree]);
+  typescriptTree = mergeTrees([typescriptTree, htmlTree]);
 
-  var mergedTree = mergeTrees([stew.mv(es6Tree, '/es6'), stew.mv(es5Tree, '/es5')]);
-
-  return destCopy(mergedTree, destinationPath);
+  return destCopy(typescriptTree, destinationPath);
 };

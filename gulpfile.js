@@ -105,7 +105,6 @@ function sequenceComplete(done) {
   };
 }
 
-
 var treatTestErrorsAsFatal = true;
 
 function runJasmineTests(globs, done) {
@@ -128,6 +127,7 @@ function runJasmineTests(globs, done) {
 // Note: when DART_SDK is not found, all gulp tasks ending with `.dart` will be skipped.
 var DART_SDK = require('./tools/build/dartdetect')(gulp);
 
+
 // -----------------------
 // configuration
 
@@ -136,12 +136,10 @@ var CONFIG = {
     js: {
       all: 'dist/js',
       dev: {
-        es6: 'dist/js/dev/es6',
-        es5: 'dist/js/dev/es5'
+        es5: 'dist/js/dev'
       },
       prod: {
-        es6: 'dist/js/prod/es6',
-        es5: 'dist/js/prod/es5'
+        es5: 'dist/js/prod'
       },
       cjs: 'dist/js/cjs',
       dart2js: 'dist/js/dart2js'
@@ -150,6 +148,7 @@ var CONFIG = {
     docs: 'dist/docs'
   }
 };
+
 
 // ------------
 // clean
@@ -178,7 +177,6 @@ gulp.task('build/tree.dart', ['build/clean.dart', 'build.tools'], function(done)
   runSequence('!build/tree.dart', sequenceComplete(done));
 });
 
-
 gulp.task('!build/tree.dart', function() {
   return angularBuilder.rebuildDartTree();
 });
@@ -202,6 +200,7 @@ gulp.task('build/pubspec.dart', pubget.subDir(gulp, gulpPlugins, {
   command: DART_SDK.PUB
 }));
 
+
 // ------------
 // dartanalyzer
 
@@ -209,6 +208,7 @@ gulp.task('build/analyze.dart', dartanalyzer(gulp, gulpPlugins, {
   dest: CONFIG.dest.dart,
   command: DART_SDK.ANALYZER
 }));
+
 
 // ------------
 // pubbuild
@@ -218,6 +218,7 @@ gulp.task('build/pubbuild.dart', pubbuild(gulp, gulpPlugins, {
   dest: CONFIG.dest.js.dart2js,
   command: DART_SDK.PUB
 }));
+
 
 // ------------
 // formatting
@@ -241,27 +242,10 @@ gulp.task('enforce-format', function() {
   });
 });
 
-// ------------
-// check circular dependencies in Node.js context
-gulp.task('build/checkCircularDependencies', function (done) {
-  var dependencyObject = madge(CONFIG.dest.js.dev.es6, {
-    format: 'es6',
-    paths: [CONFIG.dest.js.dev.es6],
-    extensions: ['.js', '.es6'],
-    onParseFile: function(data) {
-      data.src = data.src.replace(/import \* as/g, "//import * as");
-    }
-  });
-  var circularDependencies = dependencyObject.circular().getArray();
-  if (circularDependencies.length > 0) {
-    console.log(circularDependencies);
-    process.exit(1);
-  }
-  done();
-});
 
 // ------------------
 // web servers
+
 gulp.task('serve.js.dev', ['build.js.dev'], function(neverDone) {
   watch('modules/**', '!broccoli.js.dev');
 
@@ -270,7 +254,6 @@ gulp.task('serve.js.dev', ['build.js.dev'], function(neverDone) {
     port: 8000
   })();
 });
-
 
 gulp.task('serve.js.prod', jsserve(gulp, gulpPlugins, {
   path: CONFIG.dest.js.prod.es5,
@@ -297,6 +280,7 @@ gulp.task('serve/benchmarks_external.dart', pubserve(gulp, gulpPlugins, {
   path: CONFIG.dest.dart + '/benchmarks_external'
 }));
 
+
 // --------------
 // doc generation
 var Dgeni = require('dgeni');
@@ -313,7 +297,6 @@ gulp.task('docs/bower', function() {
   });
   return bowerTask;
 });
-
 
 function createDocsTasks(publicBuild) {
   var dgeniPackage = publicBuild ? './docs/public-docs-package' : './docs/dgeni-package';
@@ -387,17 +370,16 @@ gulp.task('test.dart', function(done) {
 
 // Reuse the Travis scripts
 // TODO: rename test_*.sh to test_all_*.sh
-gulp.task('test.all.js', shell.task(['./scripts/ci/test_js.sh']))
-gulp.task('test.all.dart', shell.task(['./scripts/ci/test_dart.sh']))
+gulp.task('test.all.js', shell.task(['./scripts/ci/test_js.sh']));
+gulp.task('test.all.dart', shell.task(['./scripts/ci/test_dart.sh']));
 
 // karma tests
 //     These tests run in the browser and are allowed to access
 //     HTML DOM APIs.
 function getBrowsersFromCLI() {
   var args = minimist(process.argv.slice(2));
-  return [args.browsers?args.browsers:'DartiumWithWebPlatform']
+  return [args.browsers?args.browsers:'DartiumWithWebPlatform'];
 }
-
 
 gulp.task('test.unit.js', ['build.js.dev'], function (neverDone) {
 
@@ -412,11 +394,9 @@ gulp.task('test.unit.js', ['build.js.dev'], function (neverDone) {
   );
 });
 
-
 gulp.task('!test.unit.js/karma-server', function() {
   karma.server.start({configFile: __dirname + '/karma-js.conf.js', reporters: 'dots'});
 });
-
 
 gulp.task('!test.unit.js/karma-run', function(done) {
   // run the run command in a new process to avoid duplicate logging by both server and runner from
@@ -427,7 +407,6 @@ gulp.task('!test.unit.js/karma-run', function(done) {
     done();
   });
 });
-
 
 gulp.task('test.unit.dart', function (done) {
   runSequence(
@@ -462,11 +441,9 @@ gulp.task('!test.unit.dart/karma-run', function (done) {
   });
 });
 
-
 gulp.task('!test.unit.dart/karma-server', function() {
   karma.server.start({configFile: __dirname + '/karma-dart.conf.js', reporters: 'dots'});
 });
-
 
 gulp.task('test.unit.js/ci', function (done) {
   karma.server.start({configFile: __dirname + '/karma-js.conf.js',
@@ -478,11 +455,9 @@ gulp.task('test.unit.dart/ci', function (done) {
     singleRun: true, reporters: ['dots'], browsers: getBrowsersFromCLI()}, done);
 });
 
-
 gulp.task('test.unit.cjs/ci', function(done) {
   runJasmineTests(['dist/js/cjs/{angular2,benchpress}/test/**/*_spec.js'], done);
 });
-
 
 gulp.task('test.unit.cjs', ['build/clean.js', 'build.tools'], function (neverDone) {
 
@@ -496,11 +471,9 @@ gulp.task('test.unit.cjs', ['build/clean.js', 'build.tools'], function (neverDon
   watch('modules/**', buildAndTest);
 });
 
-
 gulp.task('test.unit.tools/ci', function(done) {
   runJasmineTests(['dist/tools/**/*.spec.js', 'tools/**/*.spec.js'], done);
 });
-
 
 gulp.task('test.unit.tools', ['build/clean.tools'],  function(done) {
 
@@ -517,17 +490,21 @@ gulp.task('test.unit.tools', ['build/clean.tools'],  function(done) {
 
 // ------------------
 // server tests
+
 //     These tests run on the VM on the command-line and are
 //     allowed to access the file system and network.
 gulp.task('test.server.dart', runServerDartTests(gulp, gulpPlugins, {
   dest: 'dist/dart'
 }));
 
+
 // -----------------
 // test builders
+
 gulp.task('test.transpiler.unittest', function(done) {
   runJasmineTests(['tools/transpiler/unittest/**/*.js'], done);
 });
+
 
 // -----------------
 // orchestrated targets
@@ -607,12 +584,10 @@ gulp.task('build.dart', function(done) {
   );
 });
 
-
 // public task to build tools
 gulp.task('build.tools', ['build/clean.tools'], function(done) {
   runSequence('!build.tools', sequenceComplete(done));
 });
-
 
 // private task to build tools
 gulp.task('!build.tools', function() {
@@ -649,11 +624,9 @@ gulp.task('!broccoli.js.dev', function() {
   return angularBuilder.rebuildBrowserDevTree();
 });
 
-
 gulp.task('build.js.dev', ['build/clean.js'], function(done) {
   runSequence(
     'broccoli.js.dev',
-    'build/checkCircularDependencies',
     'check-format',
     sequenceComplete(done)
   );
@@ -663,14 +636,12 @@ gulp.task('build.js.prod', ['build.tools'], function() {
   return angularBuilder.rebuildBrowserProdTree();
 });
 
-
 /**
  * public task
  */
 gulp.task('build.js.cjs', ['build.tools'], function(done) {
   runSequence('!build.js.cjs', sequenceComplete(done));
 });
-
 
 var firstBuildJsCjs = true;
 
@@ -691,9 +662,12 @@ gulp.task('!build.js.cjs', function() {
 });
 
 
+// -----------------
+// bundle tasks
+
 var bundleConfig = {
   paths: {
-    "*": "dist/js/prod/es6/*.es6",
+    "*": "dist/js/prod/*.js",
     "rx": "node_modules/rx/dist/rx.js"
   },
   meta: {
@@ -731,10 +705,6 @@ gulp.task('bundle.js.min', ['build.js.prod'], function() {
 // development build
 gulp.task('bundle.js.dev', ['build.js.dev'], function() {
   var devBundleConfig = merge(true, bundleConfig);
-  devBundleConfig.paths =
-      merge(true, devBundleConfig.paths, {
-       "*": "dist/js/dev/es6/*.es6"
-      });
   return bundler.bundle(
       devBundleConfig,
       'angular2/angular2',
@@ -744,10 +714,6 @@ gulp.task('bundle.js.dev', ['build.js.dev'], function() {
 
 gulp.task('router.bundle.js.dev', ['build.js.dev'], function() {
   var devBundleConfig = merge(true, bundleConfig);
-  devBundleConfig.paths =
-    merge(true, devBundleConfig.paths, {
-      "*": "dist/js/dev/es6/*.es6"
-    });
   return bundler.bundle(
     devBundleConfig,
     'angular2/router - angular2/angular2',
@@ -762,10 +728,6 @@ gulp.task('router.bundle.js.dev', ['build.js.dev'], function() {
 // see: https://github.com/systemjs/builder (SFX bundles).
 gulp.task('bundle.js.sfx.dev', ['build.js.dev'], function() {
   var devBundleConfig = merge(true, bundleConfig);
-  devBundleConfig.paths =
-      merge(true, devBundleConfig.paths, {
-       '*': 'dist/js/dev/es6/*.es6'
-      });
   return bundler.bundle(
       devBundleConfig,
       'angular2/angular2_sfx',
@@ -814,9 +776,9 @@ gulp.task('clean', ['build/clean.tools', 'build/clean.js', 'build/clean.dart', '
 
 gulp.task('build', ['build.js', 'build.dart']);
 
+
 // ------------
 // change detection codegen
-
 
 gulp.task('build.change_detect.dart', function(done) {
   return runSequence('build/packages.dart', '!build/pubget.angular2.dart',
@@ -843,8 +805,10 @@ gulp.task('!build/change_detect.dart', function(done) {
   proc.stdout.pipe(dartStream);
 });
 
+
 // ------------
 // angular material testing rules
+
 gulp.task('build.css.material', function() {
   return gulp.src('modules/*/src/**/*.scss')
       .pipe(sass())
@@ -853,7 +817,6 @@ gulp.task('build.css.material', function() {
       .pipe(gulp.dest(CONFIG.dest.js.dev.es5))
       .pipe(gulp.dest(CONFIG.dest.js.dart2js + '/examples/packages'));
 });
-
 
 gulp.task('build.js.material', function(done) {
   runSequence('build.js.dev', 'build.css.material', sequenceComplete(done));
@@ -871,7 +834,6 @@ gulp.task('build.dart.material', ['build/packages.dart'], function() {
       .pipe(gulp.dest('dist/dart/angular2_material/lib/src'));
 });
 
-
 gulp.task('cleanup.builder', function(done) {
   angularBuilder.cleanup().then(function() {
     del('tmp', done); // TODO(iminar): remove after 2015-06-01
@@ -879,14 +841,12 @@ gulp.task('cleanup.builder', function(done) {
   });
 });
 
-
 // register cleanup listener for ctrl+c/kill used to quit any persistent task (autotest or serve tasks)
 process.on('SIGINT', function() {
   runSequence('cleanup.builder', function() {
     process.exit();
   });
 });
-
 
 // register cleanup listener for all non-persistent tasks
 var beforeExitRan = false;
