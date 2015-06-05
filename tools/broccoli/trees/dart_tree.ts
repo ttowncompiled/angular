@@ -44,8 +44,7 @@ function stripModulePrefix(relativePath: string): string {
 }
 
 function getSourceTree() {
-  // Transpile everything in 'modules' except for rtts_assertions.
-  var tsInputTree = modulesFunnel(['**/*.js', '**/*.ts', '**/*.dart'], ['rtts_assert/**/*']);
+  var tsInputTree = modulesFunnel(['**/*.ts', '**/*.dart'], []);
   var transpiled = ts2dart(tsInputTree, {generateLibraryName: true, generateSourceMap: false});
   // Native sources, dart only examples, etc.
   var dartSrcs = modulesFunnel(['**/*.dart', '**/*.ng_meta.json', '**/css/**']);
@@ -105,7 +104,6 @@ function getTemplatedPubspecsTree() {
     devDependencies: {
       "yargs": BASE_PACKAGE_JSON.devDependencies['yargs'],
       "gulp-sourcemaps": BASE_PACKAGE_JSON.devDependencies['gulp-sourcemaps'],
-      "gulp-traceur": BASE_PACKAGE_JSON.devDependencies['gulp-traceur'],
       "gulp": BASE_PACKAGE_JSON.devDependencies['gulp'],
       "gulp-rename": BASE_PACKAGE_JSON.devDependencies['gulp-rename'],
       "through2": BASE_PACKAGE_JSON.devDependencies['through2']
@@ -126,7 +124,7 @@ function getDocsTree() {
   var licenses = new MultiCopy('', {
     srcPath: 'LICENSE',
     targetPatterns: ['modules/*'],
-    exclude: ['*/rtts_assert'],  // Not in dart.
+    exclude: [],  // Not in dart.
   });
   licenses = stew.rename(licenses, stripModulePrefix);
 

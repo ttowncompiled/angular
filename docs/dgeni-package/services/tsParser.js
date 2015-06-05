@@ -6,10 +6,7 @@ module.exports = function tsParser(createCompilerHost, log) {
   return {
 
     // These are the extension that we should consider when trying to load a module
-    // During migration from Traceur, there is a mix of `.ts`, `.es6` and `.js` (atScript)
-    // files in the project and the TypeScript compiler only looks for `.ts` files when trying
-    // to load imports.
-    extensions: ['.ts', '.js', '.es6'],
+    extensions: ['.ts'],
 
     // The options for the TS compiler
     options: {

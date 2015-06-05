@@ -1,6 +1,3 @@
-// load traceur runtime as our tests are written in es6
-require('traceur/bin/traceur-runtime.js');
-require('reflect-metadata');
 var fs = require('fs-extra');
 
 var argv = require('yargs')

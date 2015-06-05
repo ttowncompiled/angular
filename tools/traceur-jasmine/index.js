@@ -3,8 +3,6 @@
 var glob = require('glob');
 var JasmineRunner = require('jasmine');
 var path = require('path');
-// Require traceur to exposes $traceurRuntime on global context so that CJS files can run
-require('traceur/bin/traceur-runtime.js');
 require('reflect-metadata/Reflect');
 
 var jrunner = new JasmineRunner();

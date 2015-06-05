@@ -49,8 +49,7 @@ export function ABSTRACT() {
 }
 
 // Note: This is only a marker annotation needed for ts2dart.
-// This is written so that is can be used as a Traceur annotation
-// or a Typescript decorator.
+// This is written so that is can be used as a Typescript decorator.
 export function IMPLEMENTS(_) {
   return (t) => t;
 }

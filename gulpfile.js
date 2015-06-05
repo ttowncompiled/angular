@@ -18,7 +18,6 @@ var path = require('path');
 var semver = require('semver');
 var watch = require('./tools/build/watch');
 
-var transpile = require('./tools/build/transpile');
 var pubget = require('./tools/build/pubget');
 var linknodemodules = require('./tools/build/linknodemodules');
 var pubbuild = require('./tools/build/pubbuild');
@@ -360,12 +359,12 @@ gulp.task('docs/angular.io', function() {
 // CI tests suites
 
 gulp.task('test.js', function(done) {
-  runSequence('test.unit.tools/ci', 'test.transpiler.unittest', 'docs/test', 'test.unit.js/ci',
-              'test.unit.cjs/ci', sequenceComplete(done));
+  runSequence('test.unit.tools/ci', 'docs/test', 'test.unit.js/ci', 'test.unit.cjs/ci',
+      sequenceComplete(done));
 });
 
 gulp.task('test.dart', function(done) {
-  runSequence('test.transpiler.unittest', 'docs/test', 'test.unit.dart/ci', sequenceComplete(done));
+  runSequence('docs/test', 'test.unit.dart/ci', sequenceComplete(done));
 });
 
 // Reuse the Travis scripts
@@ -465,6 +464,7 @@ gulp.task('test.unit.cjs', ['build/clean.js', 'build.tools'], function (neverDon
 
   var buildAndTest = [
     '!build.js.cjs',
+    // may need circular dependency check on either TS files or generated JS files
     'test.unit.cjs/ci'
   ];
 
@@ -499,14 +499,6 @@ gulp.task('test.server.dart', runServerDartTests(gulp, gulpPlugins, {
 
 
 // -----------------
-// test builders
-
-gulp.task('test.transpiler.unittest', function(done) {
-  runJasmineTests(['tools/transpiler/unittest/**/*.js'], done);
-});
-
-
-// -----------------
 // orchestrated targets
 
 // Pure Dart packages only contain Dart code and conform to pub package layout.
@@ -523,9 +515,20 @@ gulp.task('build/pure-packages.dart', function() {
   return gulp
     .src([
       'modules_dart/**/*.dart',
-      'modules_dart/**/pubspec.yaml',
+      'modules_dart/**/pubspec.yaml'
     ])
     .pipe(through2.obj(function(file, enc, done) {
+      // HACK until ES6 is released
+      if (!String.prototype.startsWith) {
+        String.prototype.startsWith = function(suffix) {
+          return suffix.length > 0 && this.substring(0, suffix.length) == suffix;
+        }
+      }
+      if (!String.prototype.endsWith) {
+        String.prototype.endsWith = function(suffix) {
+          return suffix.length > 0 && this.substring(this.length - suffix.length, this.length) == suffix;
+        }
+      }
       if (file.path.endsWith('pubspec.yaml')) {
         // Pure packages specify dependency_overrides relative to
         // `modules_dart`, so they have to walk up and into `dist`.
