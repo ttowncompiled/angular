@@ -19,7 +19,6 @@ System.paths = {
   '*': './*.js',
   'benchpress/*': 'dist/js/dev/es5/benchpress/*.js',
   'angular2/*': 'dist/js/dev/es5/angular2/*.js',
-  'rtts_assert/*': 'dist/js/dev/es5/rtts_assert/*.js',
   'rx': 'node_modules/rx/dist/rx.js'
 };
 

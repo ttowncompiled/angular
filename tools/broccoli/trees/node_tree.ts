@@ -15,10 +15,10 @@ var projectRootDir = path.normalize(path.join(__dirname, '..', '..', '..', '..')
 
 module.exports = function makeNodeTree(destinationPath) {
   // list of npm packages that this build will create
-  var outputPackages = ['angular2', 'benchpress', 'rtts_assert'];
+  var outputPackages = ['angular2', 'benchpress'];
 
   var modulesTree = new Funnel('modules', {
-    include: ['angular2/**', 'benchpress/**', 'rtts_assert/**', '**/e2e_test/**'],
+    include: ['angular2/**', 'benchpress/**', '**/e2e_test/**'],
     exclude: [
       // the following code and tests are not compatible with CJS/node environment
       'angular2/test/core/zone/**',
@@ -37,7 +37,6 @@ module.exports = function makeNodeTree(destinationPath) {
       types: true,            // parse types
       script: false,          // parse as a module
       memberVariables: true,  // parse class fields
-      typeAssertionModule: 'rtts_assert/rtts_assert',
       // Don't use type assertions since this is partly transpiled by typescript
       typeAssertions: false,
       modules: 'commonjs'

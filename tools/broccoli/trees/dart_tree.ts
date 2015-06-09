@@ -45,7 +45,7 @@ function stripModulePrefix(relativePath: string): string {
 
 function getSourceTree() {
   // Transpile everything in 'modules' except for rtts_assertions.
-  var tsInputTree = modulesFunnel(['**/*.js', '**/*.ts', '**/*.dart'], ['rtts_assert/**/*']);
+  var tsInputTree = modulesFunnel(['**/*.js', '**/*.ts', '**/*.dart'], []);
   var transpiled = ts2dart(tsInputTree, {generateLibraryName: true, generateSourceMap: false});
   // Native sources, dart only examples, etc.
   var dartSrcs = modulesFunnel(['**/*.dart', '**/*.ng_meta.json', '**/css/**']);
@@ -126,7 +126,7 @@ function getDocsTree() {
   var licenses = new MultiCopy('', {
     srcPath: 'LICENSE',
     targetPatterns: ['modules/*'],
-    exclude: ['*/rtts_assert'],  // Not in dart.
+    exclude: [],  // Not in dart.
   });
   licenses = stew.rename(licenses, stripModulePrefix);
 

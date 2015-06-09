@@ -71,7 +71,6 @@ module.exports = function makeBrowserTree(options, destinationPath) {
       script: false,          // parse as a module
       memberVariables: true,  // parse class fields
       modules: 'instantiate',
-      // typeAssertionModule: 'rtts_assert/rtts_assert',
       // typeAssertions: options.typeAssertions,
       outputLanguage: 'es6'
     }
@@ -103,7 +102,7 @@ module.exports = function makeBrowserTree(options, destinationPath) {
   });
 
   // Now we add a few more files to the es6 tree that Traceur should not see
-  ['angular2', 'rtts_assert'].forEach(function(destDir) {
+  ['angular2'].forEach(function(destDir) {
     var extras = new Funnel('tools/build', {files: ['es5build.js'], destDir: destDir});
     es6Tree = mergeTrees([es6Tree, extras]);
   });

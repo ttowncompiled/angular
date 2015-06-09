@@ -91,7 +91,6 @@ function reloadCompiler(reloadTraceur) {
     return m;
   };
 
-  useRttsAssertModuleForConvertingTypesToExpressions();
   supportSuperCallsInEs6Patch();
   convertTypesToExpressionsInEs6Patch();
   disableGetterSetterAssertionPatch();
@@ -176,43 +175,6 @@ function disableGetterSetterAssertionPatch() {
   var AnonBlock = System.get(traceurVersion+'/src/syntax/trees/ParseTrees.js').AnonBlock;
   MemberVariableTransformer.prototype.transformPropertyVariableDeclaration = function(tree) {
     return new AnonBlock(tree.location, []);
-  }
-}
-
-// TODO(tbosch): Get all types from `assert` module and not from `$traceurRuntime`.
-// With this a transpile to ES6 does no more include the `$traceurRuntime`.
-// see https://github.com/google/traceur-compiler/issues/1706
-function useRttsAssertModuleForConvertingTypesToExpressions() {
-  var traceurVersion = System.map['traceur'];
-  var original = System.get(traceurVersion+'/src/codegeneration/TypeToExpressionTransformer').TypeToExpressionTransformer;
-  var patch = System.get('transpiler/src/patch/TypeToExpressionTransformer').TypeToExpressionTransformer;
-  for (var prop in patch.prototype) {
-    original.prototype[prop] = patch.prototype[prop];
-  }
-  original.prototype.getOptions = function() { return currentOptions; };
-
-  var TypeAssertionTransformer = System.get(traceurVersion+'/src/codegeneration/TypeAssertionTransformer').TypeAssertionTransformer;
-  var createIdentifierExpression = System.get(traceurVersion+'/src/codegeneration/ParseTreeFactory').createIdentifierExpression;
-  var parseExpression = System.get(traceurVersion+'/src/codegeneration/PlaceholderParser.js').parseExpression;
-  TypeAssertionTransformer.prototype.transformBindingElementParameter_ = function(element, typeAnnotation) {
-    // Copied from https://github.com/google/traceur-compiler/commits/master/src/codegeneration/TypeAssertionTransformer.js
-    if (!element.binding.isPattern()) {
-      if (typeAnnotation) {
-        this.paramTypes_.atLeastOneParameterTyped = true;
-      } else {
-        // PATCH start
-        var typeModule = currentOptions.outputLanguage === 'es6' ? 'assert' : '$traceurRuntime';
-        typeAnnotation = parseExpression([typeModule + ".type.any"]);
-        // PATCH end
-      }
-
-      this.paramTypes_.arguments.push(
-        createIdentifierExpression(element.binding.identifierToken),
-        typeAnnotation);
-      return;
-    }
-
-    // NYI
   }
 }
 
