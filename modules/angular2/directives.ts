@@ -1,9 +1,3 @@
-/**
- * @module
- * @description
- * Common directives shipped with Angular.
- */
-
 import {CONST_EXPR, Type} from './src/facade/lang';
 import {NgClass} from './src/directives/ng_class';
 import {NgFor} from './src/directives/ng_for';
@@ -18,6 +12,12 @@ export * from './src/directives/ng_non_bindable';
 export * from './src/directives/ng_style';
 export * from './src/directives/ng_switch';
 
+/**
+ * @module
+ * @description
+ * Common directives shipped with Angular.
+ */
+ 
 /**
  * A collection of the Angular core directives that are likely to be used in each and every Angular
  * application.

@@ -1,10 +1,3 @@
-/*
- * This file is the entry point for the main thread
- * It takes care of spawning the worker and sending it the initial init message
- * It also acts and the messenger between the worker thread and the renderer running on the UI
- * thread
-*/
-
 import {createInjector} from "./di_bindings";
 import {
   Renderer,
@@ -39,6 +32,13 @@ import {
   serializeEventWithTarget
 } from 'angular2/src/web-workers/ui/event_serializer';
 import {wtfInit} from 'angular2/src/profile/wtf_init';
+
+/*
+ * This file is the entry point for the main thread
+ * It takes care of spawning the worker and sending it the initial init message
+ * It also acts and the messenger between the worker thread and the renderer running on the UI
+ * thread
+*/
 
 /**
  * Creates a zone, sets up the DI bindings

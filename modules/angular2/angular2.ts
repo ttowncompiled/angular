@@ -1,6 +1,3 @@
-/**
- * The `angular2` is the single place to import all of the individual types.
- */
 export {commonBootstrap as bootstrap} from 'angular2/src/core/application_common';
 
 // TODO(someone familiar with systemjs): the exports below are copied from
@@ -15,3 +12,7 @@ export * from './directives';
 export * from './forms';
 export * from './render';
 export * from './profile';
+
+/**
+ * The `angular2` is the single place to import all of the individual types.
+ */

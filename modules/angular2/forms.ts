@@ -1,17 +1,3 @@
-/**
- * @module
- * @description
- * This module is used for handling user input, by defining and building a {@link ControlGroup} that
- * consists of
- * {@link Control} objects, and mapping them onto the DOM. {@link Control} objects can then be used
- * to read information
- * from the form DOM elements.
- *
- * This module is not included in the `angular2` module; you must import the forms module
- * explicitly.
- *
- */
-
 export {AbstractControl, Control, ControlGroup, ControlArray} from './src/forms/model';
 
 export {AbstractControlDirective} from './src/forms/directives/abstract_control_directive';
@@ -39,4 +25,17 @@ export {FormBuilder} from './src/forms/form_builder';
 import {FormBuilder} from './src/forms/form_builder';
 import {CONST_EXPR, Type} from './src/facade/lang';
 
+/**
+ * @module
+ * @description
+ * This module is used for handling user input, by defining and building a {@link ControlGroup} that
+ * consists of
+ * {@link Control} objects, and mapping them onto the DOM. {@link Control} objects can then be used
+ * to read information
+ * from the form DOM elements.
+ *
+ * This module is not included in the `angular2` module; you must import the forms module
+ * explicitly.
+ *
+ */
 export const FORM_BINDINGS: List<Type> = CONST_EXPR([FormBuilder]);

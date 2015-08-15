@@ -1,9 +1,3 @@
-/**
- * @module
- * @description
- * Change detection enables data binding in Angular.
- */
-
 export {
   CHECK_ONCE,
   CHECK_ALWAYS,
@@ -29,3 +23,9 @@ export {
   KeyValueDiffer,
   KeyValueDifferFactory
 } from 'angular2/src/change_detection/change_detection';
+
+/**
+ * @module
+ * @description
+ * Change detection enables data binding in Angular.
+ */

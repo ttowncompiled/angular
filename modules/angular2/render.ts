@@ -1,9 +1,3 @@
-/**
- * @module
- * @description
- * This module provides advanced support for extending dom strategy.
- */
-
 export {
   DirectiveMetadata,
   DomRenderer,
@@ -20,3 +14,10 @@ export {
   DOM_REFLECT_PROPERTIES_AS_ATTRIBUTES,
   MAX_IN_MEMORY_ELEMENTS_PER_TEMPLATE
 } from './src/render/render';
+
+/**
+ * @module
+ * @description
+ * This module provides advanced support for extending dom strategy.
+ */
+ 

@@ -1,9 +1,3 @@
-/**
- * @module
- * @description
- * The `di` module provides dependency injection container services.
- */
-
 export {
   InjectMetadata,
   OptionalMetadata,
@@ -38,3 +32,9 @@ export {
   OutOfBoundsError
 } from './src/di/exceptions';
 export {OpaqueToken} from './src/di/opaque_token';
+
+/**
+ * @module
+ * @description
+ * The `di` module provides dependency injection container services.
+*/

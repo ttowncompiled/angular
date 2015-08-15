@@ -1,5 +1,3 @@
-// TODO:vsavkin Use enums after switching to TypeScript
-
 /**
  * CHECK_ONCE means that after calling detectChanges the mode of the change detector
  * will become CHECKED.
@@ -33,3 +31,5 @@ export const ON_PUSH: string = "ON_PUSH";
  * DEFAULT means that the change detector's mode will be set to CHECK_ALWAYS during hydration.
  */
 export const DEFAULT: string = "DEFAULT";
+
+// TODO:vsavkin Use enums after switching to TypeScript

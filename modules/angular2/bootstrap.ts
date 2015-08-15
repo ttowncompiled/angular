@@ -1,6 +1,3 @@
-/**
- * Contains everything you need to bootstrap your application.
- */
 export {bootstrap} from 'angular2/src/core/application';
 
 // TODO(someone familiar with systemjs): the exports below are copied from
@@ -14,3 +11,8 @@ export * from './di';
 export * from './directives';
 export * from './forms';
 export * from './render';
+
+/**
+ * Contains everything you need to bootstrap your application.
+ */
+ 

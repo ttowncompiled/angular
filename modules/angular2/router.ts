@@ -1,10 +1,3 @@
-/**
- * @module
- * @description
- * Maps application URLs into application states, to support deep-linking and navigation.
- */
-
-
 export {Router, RootRouter} from './src/router/router';
 export {RouterOutlet} from './src/router/router_outlet';
 export {RouterLink} from './src/router/router_link';
@@ -48,3 +41,9 @@ export var routerInjectables: List<any> = [
                   appRoot) => { return new RootRouter(registry, pipeline, location, appRoot);},
                  [RouteRegistry, Pipeline, Location, APP_COMPONENT])
 ];
+
+/**
+ * @module
+ * @description
+ * Maps application URLs into application states, to support deep-linking and navigation.
+ */

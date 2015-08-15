@@ -125,6 +125,7 @@ module.exports = function makeBrowserTree(options, destinationPath) {
     mapRoot: '', /* force sourcemaps to use relative path */
     module: 'System',
     noEmitOnError: true,
+    removeComments: true,
     rootDir: '.',
     rootFilePaths: ['angular2/traceur-runtime.d.ts', 'angular2/globals.d.ts'],
     sourceMap: true,

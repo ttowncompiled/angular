@@ -1,8 +1,4 @@
-/**
- * @module
- * @description
- * Define angular core API here.
- */
+
 export {APP_COMPONENT} from 'angular2/src/core/application_tokens';
 export {ApplicationRef} from 'angular2/src/core/application_common';
 export {Type} from 'angular2/src/facade/lang';
@@ -28,3 +24,10 @@ export {ComponentRef} from 'angular2/src/core/compiler/dynamic_component_loader'
 
 export {NgZone} from 'angular2/src/core/zone/ng_zone';
 export {Observable, EventEmitter} from 'angular2/src/facade/async';
+
+/**
+ * @module
+ * @description
+ * Define angular core API here.
+ */
+ 
