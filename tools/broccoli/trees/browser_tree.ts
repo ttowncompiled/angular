@@ -71,7 +71,7 @@ const kServedPaths = [
 
 
 module.exports = function makeBrowserTree(options, destinationPath) {
-  var modulesTree = new Funnel('modules', {
+  var es6ModulesTree = new Funnel('modules', {
     include: ['**/**'],
     exclude: [
       '**/*.cjs',
@@ -79,6 +79,15 @@ module.exports = function makeBrowserTree(options, destinationPath) {
       // Exclude ES6 polyfill typings when tsc target=ES6
       'angular2/traceur-runtime.d.ts',
       'angular2/typings/es6-promise/**'
+    ],
+    destDir: '/'
+  });
+  
+  var modulesTree = new Funnel('modules', {
+    include: ['**/**'],
+    exclude: [
+      '**/*.cjs',
+      'benchmarks/**'
     ],
     destDir: '/'
   });
@@ -96,7 +105,7 @@ module.exports = function makeBrowserTree(options, destinationPath) {
   });
 
   // Use TypeScript to transpile the *.ts files to ES6
-  var es6Tree = compileWithTypescript(modulesTree, {
+/*  var es6Tree = compileWithTypescript(modulesTree, {
     allowNonTsExtensions: false,
     declaration: false,
     emitDecoratorMetadata: true,
@@ -107,20 +116,28 @@ module.exports = function makeBrowserTree(options, destinationPath) {
     sourceRoot: '.',
     target: 'ES6'
   });
-
-  // Call Traceur to lower the ES6 build tree to ES5
-  var es5Tree = transpileWithTraceur(es6Tree, {
-    destExtension: '.js',
-    destSourceMapExtension: '.js.map',
-    traceurOptions: {modules: 'instantiate', sourceMaps: true}
+*/
+  var es5Tree = compileWithTypescript(modulesTree, {
+    allowNonTsExtensions: false,
+    emitDecoratorMetadata: true,
+    experimentalDecorators: true,
+    declaration: true,
+    mapRoot: '', /* force sourcemaps to use relative path */
+    module: 'System',
+    noEmitOnError: true,
+    rootDir: '.',
+    rootFilePaths: ['angular2/traceur-runtime.d.ts', 'angular2/globals.d.ts'],
+    sourceMap: true,
+    sourceRoot: '.',
+    target: 'ES5'
   });
 
   // Now we add a few more files to the es6 tree that Traceur should not see
-  ['angular2', 'rtts_assert'].forEach(function(destDir) {
+/*  ['angular2', 'rtts_assert'].forEach(function(destDir) {
     var extras = new Funnel('tools/build', {files: ['es5build.js'], destDir: destDir});
     es6Tree = mergeTrees([es6Tree, extras]);
   });
-
+*/
   var vendorScriptsTree = flatten(new Funnel('.', {
     files: [
       'node_modules/zone.js/dist/zone-microtask.js',
@@ -197,9 +214,9 @@ module.exports = function makeBrowserTree(options, destinationPath) {
   htmlTree = mergeTrees([htmlTree, scripts, polymer, react]);
 
   es5Tree = mergeTrees([es5Tree, htmlTree, assetsTree]);
-  es6Tree = mergeTrees([es6Tree, htmlTree, assetsTree]);
+//  es6Tree = mergeTrees([es6Tree, htmlTree, assetsTree]);
 
-  var mergedTree = mergeTrees([stew.mv(es6Tree, '/es6'), stew.mv(es5Tree, '/es5')]);
-
+//  var mergedTree = mergeTrees([stew.mv(es6Tree, '/es6'), stew.mv(es5Tree, '/es5')]);
+  var mergedTree = mergeTrees([stew.mv(es5Tree, '/es5')]);
   return destCopy(mergedTree, destinationPath);
 };
