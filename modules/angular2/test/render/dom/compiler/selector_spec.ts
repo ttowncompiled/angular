@@ -1,7 +1,6 @@
 import {describe, it, expect, beforeEach, ddescribe, iit, xit, el} from 'angular2/test_lib';
 import {DOM} from 'angular2/src/dom/dom_adapter';
-import {SelectorMatcher} from 'angular2/src/render/dom/compiler/selector';
-import {CssSelector} from 'angular2/src/render/dom/compiler/selector';
+import {SelectorMatcher, CssSelector} from 'angular2/src/render/dom/compiler/selector';
 import {List, ListWrapper, MapWrapper} from 'angular2/src/facade/collection';
 
 export function main() {

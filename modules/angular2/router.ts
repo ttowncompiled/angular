@@ -8,7 +8,6 @@
 export {Router, RootRouter} from './src/router/router';
 export {RouterOutlet} from './src/router/router_outlet';
 export {RouterLink} from './src/router/router_link';
-export {RouteParams} from './src/router/instruction';
 export {RouteRegistry} from './src/router/route_registry';
 export {LocationStrategy} from './src/router/location_strategy';
 export {HashLocationStrategy} from './src/router/hash_location_strategy';
@@ -19,7 +18,7 @@ export * from './src/router/route_config_decorator';
 export * from './src/router/route_definition';
 export {OnActivate, OnDeactivate, OnReuse, CanDeactivate, CanReuse} from './src/router/interfaces';
 export {CanActivate} from './src/router/lifecycle_annotations';
-export {Instruction, ComponentInstruction} from './src/router/instruction';
+export {Instruction, ComponentInstruction, RouteParams} from './src/router/instruction';
 export {Url} from './src/router/url_parser';
 export {OpaqueToken, Type} from 'angular2/angular2';
 

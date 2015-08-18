@@ -4,8 +4,7 @@ import {Response} from '../static_response';
 import {ReadyStates} from '../enums';
 import {Connection, ConnectionBackend} from '../interfaces';
 import {ObservableWrapper, EventEmitter} from 'angular2/src/facade/async';
-import {isPresent} from 'angular2/src/facade/lang';
-import {IMPLEMENTS, BaseException} from 'angular2/src/facade/lang';
+import {isPresent, IMPLEMENTS, BaseException} from 'angular2/src/facade/lang';
 
 /**
  *

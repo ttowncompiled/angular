@@ -1,4 +1,3 @@
-import {CONST, BaseException} from 'angular2/src/facade/lang';
 import {
   isListLikeIterable,
   iterateListLike,
@@ -7,6 +6,8 @@ import {
 } from 'angular2/src/facade/collection';
 
 import {
+  CONST,
+  BaseException,
   isBlank,
   isPresent,
   stringify,

@@ -11,12 +11,11 @@ import {
   xit,
   SpyObject
 } from 'angular2/test_lib';
-import {ObservableWrapper} from 'angular2/src/facade/async';
 import {BrowserJsonp} from 'http/src/backends/browser_jsonp';
 import {JSONPConnection, JSONPBackend} from 'http/src/backends/jsonp_backend';
 import {bind, Injector} from 'angular2/di';
 import {isPresent, StringWrapper} from 'angular2/src/facade/lang';
-import {TimerWrapper} from 'angular2/src/facade/async';
+import {TimerWrapper, ObservableWrapper} from 'angular2/src/facade/async';
 import {Request} from 'http/src/static_request';
 import {Response} from 'http/src/static_response';
 import {Map} from 'angular2/src/facade/collection';

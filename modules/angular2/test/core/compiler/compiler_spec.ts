@@ -42,10 +42,10 @@ import {
   RenderProtoViewMergeMapping,
   RenderDirectiveMetadata,
   DirectiveBinder,
-  RenderElementBinder
+  RenderElementBinder,
+  RenderCompiler
 } from 'angular2/src/render/api';
 // TODO(tbosch): Spys don't support named modules...
-import {RenderCompiler} from 'angular2/src/render/api';
 import {PipeBinding} from 'angular2/src/core/pipes/pipe_binding';
 
 

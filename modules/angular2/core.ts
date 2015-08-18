@@ -17,14 +17,13 @@ export {Compiler} from 'angular2/src/core/compiler/compiler';
 
 export {AppViewManager} from 'angular2/src/core/compiler/view_manager';
 export {QueryList} from 'angular2/src/core/compiler/query_list';
-export {DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
 export {LifeCycle} from 'angular2/src/core/life_cycle/life_cycle';
 
 export {ElementRef} from 'angular2/src/core/compiler/element_ref';
 export {TemplateRef} from 'angular2/src/core/compiler/template_ref';
 export {ViewRef, HostViewRef, ProtoViewRef} from 'angular2/src/core/compiler/view_ref';
 export {ViewContainerRef} from 'angular2/src/core/compiler/view_container_ref';
-export {ComponentRef} from 'angular2/src/core/compiler/dynamic_component_loader';
+export {ComponentRef, DynamicComponentLoader} from 'angular2/src/core/compiler/dynamic_component_loader';
 
 export {NgZone} from 'angular2/src/core/zone/ng_zone';
 export {Observable, EventEmitter} from 'angular2/src/facade/async';
