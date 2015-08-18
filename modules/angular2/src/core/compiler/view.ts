@@ -17,7 +17,6 @@ import {
   Locals,
   ProtoChangeDetector
 } from 'angular2/src/change_detection/change_detection';
-import {DebugContext} from 'angular2/src/change_detection/interfaces';
 
 import {
   ProtoElementInjector,
@@ -33,7 +32,10 @@ import {ViewRef, ProtoViewRef, internalView} from './view_ref';
 import {ElementRef} from './element_ref';
 import {ProtoPipes} from 'angular2/src/core/pipes/pipes';
 
-export {DebugContext} from 'angular2/src/change_detection/interfaces';
+// remove when https://github.com/systemjs/systemjs/issues/712 is closed
+import * as interfacesImport from 'angular2/src/change_detection/interfaces';
+export var DebugContext = interfacesImport.DebugContext;
+export type DebugContext = interfacesImport.DebugContext;
 
 export class AppProtoViewMergeMapping {
   renderProtoViewRef: renderApi.RenderProtoViewRef;

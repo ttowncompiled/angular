@@ -5,18 +5,31 @@
  */
 
 import {CONST_EXPR, Type} from './src/facade/lang';
-import {NgClass} from './src/directives/ng_class';
-import {NgFor} from './src/directives/ng_for';
-import {NgIf} from './src/directives/ng_if';
-import {NgNonBindable} from './src/directives/ng_non_bindable';
-import {NgSwitch, NgSwitchWhen, NgSwitchDefault} from './src/directives/ng_switch';
 
-export * from './src/directives/ng_class';
-export * from './src/directives/ng_for';
-export * from './src/directives/ng_if';
-export * from './src/directives/ng_non_bindable';
 export * from './src/directives/ng_style';
-export * from './src/directives/ng_switch';
+
+// remove when https://github.com/systemjs/systemjs/issues/712 is closed
+import * as ngClassImport from './src/directives/ng_class';
+import * as ngForImport from './src/directives/ng_for';
+import * as ngIfImport from './src/directives/ng_if';
+import * as ngNonImport from './src/directives/ng_non_bindable';
+import * as ngSwitchImport from './src/directives/ng_switch';
+export var NgClass = ngClassImport.NgClass;
+export var NgFor = ngForImport.NgFor;
+export var RecordViewTuple = ngForImport.RecordViewTuple;
+export var NgIf = ngIfImport.NgIf; 
+export var NgNonBindable = ngNonImport.NgNonBindable;
+export var NgSwitch = ngSwitchImport.NgSwitch;
+export var NgSwitchWhen = ngSwitchImport.NgSwitchWhen;
+export var NgSwitchDefault = ngSwitchImport.NgSwitchDefault;
+export type NgClass = ngClassImport.NgClass;
+export type NgFor = ngForImport.NgFor;
+export type RecordViewTuple = ngForImport.RecordViewTuple;
+export type NgIf = ngIfImport.NgIf; 
+export type NgNonBindable = ngNonImport.NgNonBindable;
+export type NgSwitch = ngSwitchImport.NgSwitch;
+export type NgSwitchWhen = ngSwitchImport.NgSwitchWhen;
+export type NgSwitchDefault = ngSwitchImport.NgSwitchDefault;
 
 /**
  * A collection of the Angular core directives that are likely to be used in each and every Angular

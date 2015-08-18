@@ -1,9 +1,11 @@
 import {MapWrapper} from 'angular2/src/facade/collection';
 import {stringify, CONST, Type, isBlank, BaseException} from 'angular2/src/facade/lang';
-import {TypeLiteral} from './type_literal';
 import {resolveForwardRef} from './forward_ref';
 
-export {TypeLiteral} from './type_literal';
+// remove when https://github.com/systemjs/systemjs/issues/712 is closed
+import * as typeImport from './type_literal';
+export var TypeLiteral = typeImport.TypeLiteral;
+export type TypeLiteral = typeImport.TypeLiteral;
 
 /**
  * A unique object used for retrieving items from the {@link Injector}.

@@ -4,17 +4,23 @@
  */
 
 import {makeDecorator} from 'angular2/src/util/decorators';
-import {CanActivate as CanActivateAnnotation} from './lifecycle_annotations_impl';
 import {Promise} from 'angular2/src/facade/async';
 import {ComponentInstruction} from 'angular2/src/router/instruction';
 
-export {
-  canReuse,
-  canDeactivate,
-  onActivate,
-  onReuse,
-  onDeactivate
-} from './lifecycle_annotations_impl';
+// remove when https://github.com/systemjs/systemjs/issues/712 is closed
+import * as implImport from './lifecycle_annotations_impl';
+export var CanActivateAnnotation = implImport.CanActivate;
+export var canReuse = implImport.canReuse;
+export var canDeactivate = implImport.canDeactivate;
+export var onActivate = implImport.onActivate;
+export var onReuse = implImport.onReuse;
+export var onDeactivate = implImport.onDeactivate;
+export type CanActivateAnnotation = implImport.CanActivate;
+export type canReuse = implImport.canReuse;
+export type canDeactivate = implImport.canDeactivate;
+export type onActivate = implImport.onActivate;
+export type onReuse = implImport.onReuse;
+export type onDeactivate = implImport.onDeactivate;
 
 /**
  * Defines route lifecycle method [canActivate], which is called by the router to determine

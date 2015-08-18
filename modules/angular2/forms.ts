@@ -34,9 +34,12 @@ export {
 export {FORM_DIRECTIVES} from './src/forms/directives';
 export {Validators} from './src/forms/validators';
 export {NgValidator, NgRequiredValidator} from './src/forms/directives/validators';
-export {FormBuilder} from './src/forms/form_builder';
 
-import {FormBuilder} from './src/forms/form_builder';
 import {CONST_EXPR, Type} from './src/facade/lang';
+
+// remove when https://github.com/systemjs/systemjs/issues/712 is closed
+import * as formImport from './src/forms/form_builder';
+export var FormBuilder = formImport.FormBuilder;
+export type FormBuilder = formImport.FormBuilder;
 
 export const FORM_BINDINGS: List<Type> = CONST_EXPR([FormBuilder]);

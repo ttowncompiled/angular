@@ -1,33 +1,42 @@
 import {Type, CONST_EXPR} from 'angular2/src/facade/lang';
-import {NgControlName} from './directives/ng_control_name';
-import {NgFormControl} from './directives/ng_form_control';
-import {NgModel} from './directives/ng_model';
-import {NgControlGroup} from './directives/ng_control_group';
-import {NgFormModel} from './directives/ng_form_model';
-import {NgForm} from './directives/ng_form';
-import {DefaultValueAccessor} from './directives/default_value_accessor';
-import {CheckboxControlValueAccessor} from './directives/checkbox_value_accessor';
-import {
-  SelectControlValueAccessor,
-  NgSelectOption
-} from './directives/select_control_value_accessor';
-import {NgRequiredValidator} from './directives/validators';
-
-export {NgControlName} from './directives/ng_control_name';
-export {NgFormControl} from './directives/ng_form_control';
-export {NgModel} from './directives/ng_model';
 export {NgControl} from './directives/ng_control';
-export {NgControlGroup} from './directives/ng_control_group';
-export {NgFormModel} from './directives/ng_form_model';
-export {NgForm} from './directives/ng_form';
 export {ControlValueAccessor} from './directives/control_value_accessor';
-export {DefaultValueAccessor} from './directives/default_value_accessor';
-export {CheckboxControlValueAccessor} from './directives/checkbox_value_accessor';
-export {
-  SelectControlValueAccessor,
-  NgSelectOption
-} from './directives/select_control_value_accessor';
-export {NgValidator, NgRequiredValidator} from './directives/validators';
+
+// remove when https://github.com/systemjs/systemjs/issues/712 is closed
+import * as nameImport from './directives/ng_control_name';
+import * as controlImport from './directives/ng_form_control';
+import * as groupImport from './directives/ng_control_group';
+import * as formModelImport from './directives/ng_form_model';
+import * as formImport from './directives/ng_form';
+import * as checkImport from './directives/checkbox_value_accessor';
+import * as selectImport from './directives/select_control_value_accessor';
+import * as modelImport from './directives/ng_model';
+import * as defaultImport from './directives/default_value_accessor';
+import * as requireImport from './directives/validators';
+export var NgControlName = nameImport.NgControlName;
+export var NgFormControl = controlImport.NgFormControl;
+export var NgModel = modelImport.NgModel;
+export var NgControlGroup = groupImport.NgControlGroup;
+export var NgFormModel = formModelImport.NgFormModel;
+export var NgForm = formImport.NgForm;
+export var DefaultValueAccessor = defaultImport.DefaultValueAccessor;
+export var CheckboxControlValueAccessor = checkImport.CheckboxControlValueAccessor;
+export var SelectControlValueAccessor = selectImport.SelectControlValueAccessor;
+export var NgSelectOption = selectImport.NgSelectOption;
+export var NgValidator = requireImport.NgValidator;
+export var NgRequiredValidator = requireImport.NgRequiredValidator;
+export type NgControlName = nameImport.NgControlName;
+export type NgFormControl = controlImport.NgFormControl;
+export type NgModel = modelImport.NgModel;
+export type NgControlGroup = groupImport.NgControlGroup;
+export type NgFormModel = formModelImport.NgFormModel;
+export type NgForm = formImport.NgForm;
+export type DefaultValueAccessor = defaultImport.DefaultValueAccessor;
+export type CheckboxControlValueAccessor = checkImport.CheckboxControlValueAccessor;
+export type SelectControlValueAccessor = selectImport.SelectControlValueAccessor;
+export type NgSelectOption = selectImport.NgSelectOption;
+export type NgValidator = requireImport.NgValidator;
+export type NgRequiredValidator = requireImport.NgRequiredValidator;
 
 /**
  *

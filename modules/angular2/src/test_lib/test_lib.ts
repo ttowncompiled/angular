@@ -8,9 +8,12 @@ import {NgZoneZone} from 'angular2/src/core/zone/ng_zone';
 import {bind} from 'angular2/di';
 import {ExceptionHandler} from 'angular2/src/core/exception_handler';
 
-import {createTestInjector, FunctionWithParamTokens, inject} from './test_injector';
-
-export {inject} from './test_injector';
+// remove when https://github.com/systemjs/systemjs/issues/712 is closed
+import * as injectorImport from './test_injector';
+export var inject = injectorImport.inject;
+export type inject = injectorImport.inject;
+var createTestInjector = injectorImport.createTestInjector;
+var FunctionWithParamTokens = injectorImport.FunctionWithParamTokens;
 
 export var proxy: ClassDecorator = (t) => t;
 

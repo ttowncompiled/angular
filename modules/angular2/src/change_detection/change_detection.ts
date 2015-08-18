@@ -1,11 +1,7 @@
 import {JitProtoChangeDetector} from './jit_proto_change_detector';
 import {PregenProtoChangeDetector} from './pregen_proto_change_detector';
-import {DynamicProtoChangeDetector} from './proto_change_detector';
-import {IterableDiffers, IterableDifferFactory} from './differs/iterable_differs';
 import {DefaultIterableDifferFactory} from './differs/default_iterable_differ';
-import {KeyValueDiffers, KeyValueDifferFactory} from './differs/keyvalue_differs';
 import {DefaultKeyValueDifferFactory} from './differs/default_keyvalue_differ';
-import {ChangeDetection, ProtoChangeDetector, ChangeDetectorDefinition} from './interfaces';
 import {Injector, Inject, Injectable, OpaqueToken, Optional, Binding} from 'angular2/di';
 import {List, StringMap, StringMapWrapper} from 'angular2/src/facade/collection';
 import {CONST, CONST_EXPR, isPresent, BaseException} from 'angular2/src/facade/lang';
@@ -18,34 +14,46 @@ export {
   LiteralArray,
   ImplicitReceiver
 } from './parser/ast';
-
 export {Lexer} from './parser/lexer';
 export {Parser} from './parser/parser';
 export {Locals} from './parser/locals';
-
 export {
   DehydratedException,
   ExpressionChangedAfterItHasBeenCheckedException,
   ChangeDetectionError
 } from './exceptions';
-export {
-  ProtoChangeDetector,
-  ChangeDetector,
-  ChangeDispatcher,
-  ChangeDetection,
-  ChangeDetectorDefinition,
-  DebugContext
-} from './interfaces';
 export {CHECK_ONCE, CHECK_ALWAYS, DETACHED, CHECKED, ON_PUSH, DEFAULT} from './constants';
-export {DynamicProtoChangeDetector} from './proto_change_detector';
+export {DynamicChangeDetector} from './dynamic_change_detector';
 export {BindingRecord} from './binding_record';
 export {DirectiveIndex, DirectiveRecord} from './directive_record';
-export {DynamicChangeDetector} from './dynamic_change_detector';
 export {ChangeDetectorRef} from './change_detector_ref';
-export {IterableDiffers, IterableDiffer, IterableDifferFactory} from './differs/iterable_differs';
-export {KeyValueDiffers, KeyValueDiffer, KeyValueDifferFactory} from './differs/keyvalue_differs';
 export {PipeTransform, PipeOnDestroy} from './pipe_transform';
 export {WrappedValue} from './change_detection_util';
+
+// remove when https://github.com/systemjs/systemjs/issues/712 is closed
+import * as iterableImport from './differs/iterable_differs';
+import * as keyImport from './differs/keyvalue_differs';
+import * as protoImport from './proto_change_detector';
+import * as interfaceImport from './interfaces';
+export var ChangeDetection = interfaceImport.ChangeDetection;
+export var ChangeDetectorDefinition = interfaceImport.ChangeDetectorDefinition;
+export var DebugContext = interfaceImport.DebugContext;
+export var IterableDiffers = iterableImport.IterableDiffers;
+export var KeyValueDiffers = keyImport.KeyValueDiffers;
+export var DynamicProtoChangeDetector = protoImport.DynamicProtoChangeDetector;
+export type ProtoChangeDetector = interfaceImport.ProtoChangeDetector;
+export type ChangeDetector = interfaceImport.ChangeDetector;
+export type ChangeDispatcher = interfaceImport.ChangeDispatcher;
+export type ChangeDetection = interfaceImport.ChangeDetection;
+export type ChangeDetectorDefinition = interfaceImport.ChangeDetectorDefinition;
+export type DebugContext = interfaceImport.DebugContext;
+export type IterableDiffers = iterableImport.IterableDiffers;
+export type IterableDiffer = iterableImport.IterableDiffer;
+export type IterableDifferFactory = iterableImport.IterableDifferFactory;
+export type KeyValueDiffers = keyImport.KeyValueDiffers;
+export type KeyValueDiffer = keyImport.KeyValueDiffer;
+export type KeyValueDifferFactory = keyImport.KeyValueDifferFactory;
+export type DynamicProtoChangeDetector = protoImport.DynamicProtoChangeDetector;
 
 /**
  * Structural diffing for `Object`s and `Map`s.

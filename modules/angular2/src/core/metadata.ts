@@ -2,40 +2,31 @@
  * This indirection is needed to free up Component, etc symbols in the public API
  * to be used by the decorator versions of these annotations.
  */
-
-export {
-  QueryMetadata,
-  ViewQueryMetadata,
-  AttributeMetadata,
-} from './metadata/di';
-
-export {
-  ComponentMetadata,
-  DirectiveMetadata,
-  PipeMetadata,
-  LifecycleEvent
-} from './metadata/directives';
-
-export {ViewMetadata, ViewEncapsulation} from './metadata/view';
-
-
-import {
-  QueryMetadata,
-  ViewQueryMetadata,
-  AttributeMetadata,
-} from './metadata/di';
-
-import {
-  ComponentMetadata,
-  DirectiveMetadata,
-  PipeMetadata,
-  LifecycleEvent
-} from './metadata/directives';
-
-import {ViewMetadata, ViewEncapsulation} from './metadata/view';
-
 import {makeDecorator, makeParamDecorator, TypeDecorator, Class} from '../util/decorators';
 import {Type} from 'angular2/src/facade/lang';
+
+// remove when https://github.com/systemjs/systemjs/issues/712 is closed
+import * as diImport from './metadata/di';
+import * as viewImport from './metadata/view';
+import * as directivesImport from './metadata/directives';
+export var QueryMetadata = diImport.QueryMetadata;
+export var ViewQueryMetadata = diImport.ViewQueryMetadata;
+export var AttributeMetadata = diImport.AttributeMetadata;
+export var ViewMetadata = viewImport.ViewMetadata;
+export var ViewEncapsulation = viewImport.ViewEncapsulation;
+export var ComponentMetadata = directivesImport.ComponentMetadata;
+export var DirectiveMetadata = directivesImport.DirectiveMetadata;
+export var PipeMetadata = directivesImport.PipeMetadata;
+export var LifecycleEvent = directivesImport.LifecycleEvent;
+export type QueryMetadata = diImport.QueryMetadata;
+export type ViewQueryMetadata = diImport.ViewQueryMetadata;
+export type AttributeMetadata = diImport.AttributeMetadata;
+export type ViewMetadata = viewImport.ViewMetadata;
+export type ViewEncapsulation = viewImport.ViewEncapsulation;
+export type ComponentMetadata = directivesImport.ComponentMetadata;
+export type DirectiveMetadata = directivesImport.DirectiveMetadata;
+export type PipeMetadata = directivesImport.PipeMetadata;
+export type LifecycleEvent = directivesImport.LifecycleEvent;
 
 /**
  * Interface for the {@link DirectiveMetadata} decorator function.
